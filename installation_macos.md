@@ -20,6 +20,12 @@ pip install -r requirements-macos.txt
 ```
 
 For Apple Silicon,
-```bash
+```sh
 pip install --upgrade jax-macos
 ```
+
+Test the installation by finetuning on the debug dataset:
+```sh
+python scripts/finetune.py --config.pretrained_path=hf://rail-berkeley/octo-small --debug
+```
+On Apple M2 Ultra, the script runs at around 5 seconds per iteration. Because jax-metal only supports float32, the model is converted to float32 and takes up about 100 GB of memory. If you have less than 100 GB of memory, you can try to reduce the batch size by adding `--config.batch_size=4` to the command line.
